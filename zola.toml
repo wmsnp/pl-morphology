@@ -1,0 +1,13 @@
+base_url = "https://morph.wmsnp.top"
+title = "编程语言：计算的形态学"
+default_language = "zh"
+theme = "book"
+author = "wmsnp"
+
+compile_sass = true
+build_search_index = false
+
+[markdown]
+
+[markdown.highlighting]
+theme = "catppuccin-mocha"
