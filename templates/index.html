@@ -101,6 +101,28 @@
                     {left: '$$', right: '$$', display: true},
                     {left: '$', right: '$', display: false}
                 ]
-            });"></script>
+            });">
+        </script>
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+            async function renderMermaid() {
+                const elements = document.querySelectorAll('code[data-lang="mermaid"]');
+                for (let i = 0; i < elements.length; i++) {
+                    const element = elements[i];
+                    const parent = element.parentElement;
+                    
+                    let code = element.textContent.split('\n').map(line => line.trim()).join('\n');
+                    const id = `mermaid-svg-${i}`;
+                    try {
+                        const { svg } = await mermaid.render(id, code);
+                        parent.outerHTML = `<div class="mermaid-container">${svg}</div>`;
+                    } catch (error) {
+                        console.error('Mermaid 渲染出错:', error);
+                    }
+                }
+            }
+            if (document.readyState === 'complete') renderMermaid();
+            else window.addEventListener('load', renderMermaid);
+        </script>
     </body>
 </html>

@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="{{ get_url(path="admonition.css") | safe }}">
+
+{% if type == "theorem" %}
+    {% set color = "#0052cc" %}
+    {% set bg = "#f4f7fb" %}
+{% set icon = "M15 13V14H1V13H15ZM8 1H9V12H8V1ZM3.5 4.5L1.5 8.5H5.5L3.5 4.5ZM12.5 4.5L10.5 8.5H14.5L12.5 4.5Z" %}
+{% elif type == "proof" %}
+    {% set color = "#475872" %}
+    {% set bg = "#ffffff" %}
+{% set icon = "M12.823 1.157c-.504-.5-1.312-.482-1.802.043l-8.68 9.28a.5.5 0 0 0-.125.234l-1.2 4.4a.5.5 0 0 0 .61.61l4.4-1.2a.5.5 0 0 0 .234-.125l9.28-8.68c.525-.49.543-1.298.043-1.802l-2.86-2.76z" %}
+{% else %}
+    {% set color = "#448aff" %}
+    {% set bg = "rgba(68,138,255,0.1)" %}
+    {% set icon = "M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0-1A6 6 0 1 0 8 2a6 6 0 0 0 0 12zM7.5 7h1v4h-1V7zm0-2h1v1h-1V5z" %}
+{% endif %}
+
+<details class="admonition admonition-{{ type }}" {% if type == "theorem" or open %}open{% endif %} style="--adm-color: {{ color }}; --adm-bg: {{ bg }};">
+    <summary class="admonition-title">
+        <div class="title-content">
+            <svg class="icon" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" fill-rule="evenodd"><path d="{{ icon }}"></path></svg>
+            <span>{{ title | default(value=type | capitalize) }}</span>
+        </div>
+        <div class="admonition-caret">
+            <svg viewBox="0 0 16 16" width="16" height="16"><path d="M6.22 3.22a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L9.94 8 6.22 4.28a.75.75 0 010-1.06z"></path></svg>
+        </div>
+    </summary>
+    <div class="admonition-wrapper">
+        <div class="admonition-inner">
+            <div class="admonition-content">
+                {{ body | markdown | safe }}
+                {% if type == "proof" %} <div style="text-align: right; opacity: 0.5;">□</div> {% endif %}
+            </div>
+        </div>
+    </div>
+</details>
